@@ -119,7 +119,7 @@ public class FooterComponent extends VerticalLayout {
             case "dietas sugeridas" -> "dashboard";
             case "nivel de actividad" -> "dashboard";
             case "recetas" -> "info";
-            case "contacto", "blog" -> "info";
+            case "contacto", "blog" -> "contact";
             case "privacidad", "terminos", "términos" -> "#";
             default -> "#";
         };
