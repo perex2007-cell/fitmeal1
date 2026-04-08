@@ -40,7 +40,7 @@ public class FooterComponent extends VerticalLayout {
         VerticalLayout col2 = createFooterCol("Nutrición y Salud", "Calculadora IMC", "Dietas Sugeridas", "Nivel de Actividad", "Recetas");
         
         // Column 3
-        VerticalLayout col3 = createFooterCol("FitMeal", "Contacto", "Blog", "Privacidad", "Términos");
+        VerticalLayout col3 = createFooterCol("FitMeal", "Comentarios", "Contacto", "Blog", "Privacidad", "Términos");
 
         // Column 4 (Social Media)
         VerticalLayout col4 = new VerticalLayout();
@@ -120,6 +120,7 @@ public class FooterComponent extends VerticalLayout {
             case "dietas sugeridas" -> "/dashboard";
             case "nivel de actividad" -> "/dashboard";
             case "recetas" -> "/info";
+            case "comentarios" -> "/feedback";
             case "contacto" -> "/contact";
             case "blog" -> "/blog";
             case "privacidad" -> "/privacy";

@@ -36,8 +36,9 @@ logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
         RouterLink homeLink = new RouterLink("Inicio", MainView.class);
         RouterLink exercisesLink = new RouterLink("Ejercicios", ExerciseView.class);
         RouterLink dashboardLink = new RouterLink("Panel", DashboardView.class);
+        RouterLink feedbackLink = new RouterLink("Comentarios", FeedbackView.class);
 
-        RouterLink[] links = {homeLink, exercisesLink, dashboardLink};
+        RouterLink[] links = {homeLink, exercisesLink, dashboardLink, feedbackLink};
         for (RouterLink link : links) {
             link.getStyle()
                     .set("color", "white")
@@ -48,7 +49,7 @@ logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
 
         nav.setAlignItems(FlexComponent.Alignment.CENTER);
         nav.setSpacing(true);
-        nav.add(homeLink, exercisesLink, dashboardLink);
+        nav.add(homeLink, exercisesLink, dashboardLink, feedbackLink);
         updateAuthButton();
 
         HorizontalLayout header = new HorizontalLayout(logoLayout, nav);
