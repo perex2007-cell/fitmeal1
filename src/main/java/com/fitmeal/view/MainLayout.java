@@ -22,15 +22,16 @@ public class MainLayout extends AppLayout implements AfterNavigationObserver {
     }
 
     private void createHeader() {
-        H1 logo = new H1("FitMeal");
-        logo.getStyle()
-                .set("font-size", "1.5em")
-                .set("margin", "0")
-                .set("color", "white")
-                .set("font-weight", "bold");
+       RouterLink logoLink = new RouterLink("FitMeal", MainView.class);
+logoLink.getStyle()
+        .set("font-size", "1.5em")
+        .set("margin", "0")
+        .set("color", "white")
+        .set("font-weight", "bold")
+        .set("text-decoration", "none");
 
-        HorizontalLayout logoLayout = new HorizontalLayout(logo);
-        logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
+HorizontalLayout logoLayout = new HorizontalLayout(logoLink);
+logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
 
         RouterLink homeLink = new RouterLink("Inicio", MainView.class);
         RouterLink exercisesLink = new RouterLink("Ejercicios", ExerciseView.class);
