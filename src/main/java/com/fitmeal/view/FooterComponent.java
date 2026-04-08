@@ -1,5 +1,7 @@
 package com.fitmeal.view;
 
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Span;
@@ -78,10 +80,11 @@ public class FooterComponent extends VerticalLayout {
         Span copyright = new Span("Copyright 2026 - FitMeal / Open Sans");
         copyright.getStyle().set("color", "#ccc").set("font-size", "0.85rem");
         
-        Span domain = new Span("www.fitmeal.com");
-        domain.getStyle().set("color", "#ccc").set("font-size", "0.85rem");
+        Anchor domainLink = new Anchor("/", "www.fitmeal.com");
+        styleFooterLink(domainLink);
+        domainLink.getStyle().set("color", "#ccc").set("font-size", "0.85rem").set("padding", "0");
 
-        bottomBar.add(copyright, domain);
+        bottomBar.add(copyright, domainLink);
 
         // Append to Component
         add(columnsWrapper, divider, bottomBar);
@@ -98,22 +101,45 @@ public class FooterComponent extends VerticalLayout {
         col.add(title);
 
         for (String linkStr : links) {
-            Span linkSpan = new Span(linkStr);
-            linkSpan.getStyle()
-                    .set("color", "#a6c9cc")
-                    .set("font-size", "0.95rem")
-                    .set("margin-bottom", "10px")
-                    .set("cursor", "pointer")
-                    .set("transition", "color 0.2s");
-            // Simple hover effect simulated conceptually, though inline style lacks active pseudoclass
-            col.add(linkSpan);
+            Anchor anchor = new Anchor(getFooterHref(linkStr), linkStr);
+            styleFooterLink(anchor);
+            col.add(anchor);
         }
         return col;
     }
 
-    private Div createSocialIcon(String text, String bgColor) {
-        Div icon = new Div();
-        icon.setText(text);
+    private String getFooterHref(String text) {
+        String normalized = text.toLowerCase().replaceAll("[^a-z0-9 ]", "").trim();
+        return switch (normalized) {
+            case "home" -> "/";
+            case "exercises", "ejercicios" -> "exercises";
+            case "create diet" -> "register";
+            case "login signup", "login / signup" -> "login";
+            case "calculadora imc" -> "info";
+            case "dietas sugeridas" -> "dashboard";
+            case "nivel de actividad" -> "dashboard";
+            case "recetas" -> "info";
+            case "contacto", "blog" -> "info";
+            case "privacidad", "terminos", "términos" -> "#";
+            default -> "#";
+        };
+    }
+
+    private void styleFooterLink(Component link) {
+        link.getElement().getStyle()
+                .set("color", "#a6c9cc")
+                .set("font-size", "0.95rem")
+                .set("margin-bottom", "10px")
+                .set("cursor", "pointer")
+                .set("transition", "color 0.2s")
+                .set("display", "block")
+                .set("text-decoration", "none")
+                .set("padding", "4px 0");
+    }
+
+    private Anchor createSocialIcon(String text, String bgColor) {
+        Anchor icon = new Anchor("#", text);
+        styleFooterLink(icon);
         icon.getStyle()
             .set("width", "35px")
             .set("height", "35px")
@@ -125,7 +151,7 @@ public class FooterComponent extends VerticalLayout {
             .set("align-items", "center")
             .set("font-weight", "bold")
             .set("font-size", "0.9rem")
-            .set("cursor", "pointer");
+            .set("text-decoration", "none");
         return icon;
     }
 }
