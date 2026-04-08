@@ -115,7 +115,7 @@ public class FooterComponent extends VerticalLayout {
             case "exercises", "ejercicios" -> "exercises";
             case "create diet", "crear plan" -> "register";
             case "login signup", "login / signup", "ingresar" -> "login";
-            case "calculadora imc" -> "info";
+            case "calculadora imc" -> "info#imc-calculator";
             case "dietas sugeridas" -> "dashboard";
             case "nivel de actividad" -> "dashboard";
             case "recetas" -> "info";

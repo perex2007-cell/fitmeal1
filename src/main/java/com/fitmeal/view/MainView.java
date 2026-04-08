@@ -58,11 +58,14 @@ public class MainView extends VerticalLayout {
 
         H1 heroTitle = new H1("TRANSFORMA TU VIDA: EJERCICIO Y NUTRICIÓN A TU MEDIDA");
         heroTitle.getStyle()
+
+                .set("color", "white")
                  .set("font-size", "3.8rem")
                  .set("font-weight", "900")
                  .set("max-width", "850px")
                  .set("text-transform", "uppercase")
                  .set("line-height", "1.1");
+                 
                  
         Paragraph heroSub = new Paragraph("Descubre el balance perfecto entre entrenamientos efectivos y un régimen alimenticio diseñado estratégicamente para tu tipo de cuerpo.");
         heroSub.getStyle().set("font-size", "1.4rem").set("max-width", "700px").set("line-height", "1.5");
@@ -325,7 +328,7 @@ public class MainView extends VerticalLayout {
            .set("background", "url('" + bgUrl + "') center/cover no-repeat");
 
         H4 t = new H4(titleStr);
-        t.getStyle().set("margin", "15px 15px 5px").set("font-size", "1.2rem").set("color", "#222");
+        t.getStyle().set("margin", "15px 15px 5px").set("font-size", "1.2rem").set("color", "#2b2929");
 
         Paragraph d = new Paragraph(descStr);
         d.getStyle().set("margin", "0 15px 15px").set("font-size", "0.95rem").set("color", "#666").set("line-height", "1.4");
