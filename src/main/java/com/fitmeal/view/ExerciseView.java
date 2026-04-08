@@ -9,15 +9,22 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
 import java.util.List;
 
 @Route(value = "exercises", layout = MainLayout.class)
-public class ExerciseView extends ProtectedView {
+public class ExerciseView extends ProtectedView implements BeforeEnterObserver {
 
     private ExerciseService exerciseService = new ExerciseService();
+    private Goal selectedGoal = Goal.WEIGHT_LOSS;
+
+    private VerticalLayout container;
+    private H2 title;
+    private Paragraph subtitle;
+    private Div cardsGrid;
 
     public ExerciseView() {
         setSpacing(false);
@@ -25,28 +32,68 @@ public class ExerciseView extends ProtectedView {
         setAlignItems(Alignment.CENTER);
         getStyle().set("background-color", "#f8fdfd");
 
-        UserProfile user = new UserProfile(70, 1.70, 25, Goal.WEIGHT_LOSS);
-
-        VerticalLayout container = new VerticalLayout();
+        container = new VerticalLayout();
         container.setMaxWidth("1000px");
         container.setPadding(true);
         container.getStyle().set("margin-top", "40px").set("margin-bottom", "40px");
 
-        H2 title = new H2("Ejercicios Recomendados");
+        title = new H2();
         title.getStyle().set("color", "#0A6D75").set("margin-bottom", "5px");
-        
-        String goalText = user.getGoal() == Goal.WEIGHT_LOSS ? "Enfoque: Pérdida de grasa y tonificación" : "Enfoque: Fuerza e hipertrofia";
-        Paragraph subtitle = new Paragraph(goalText);
+
+        subtitle = new Paragraph();
         subtitle.getStyle().set("color", "#666").set("margin-top", "0").set("margin-bottom", "30px");
 
-        Div cardsGrid = new Div();
+        cardsGrid = new Div();
         cardsGrid.getStyle()
                  .set("display", "grid")
                  .set("grid-template-columns", "repeat(auto-fit, minmax(300px, 1fr))")
                  .set("gap", "20px")
                  .set("width", "100%");
 
-        List<Exercise> exercises = exerciseService.getExercisesByGoal(user.getGoal());
+        Button backButton = new Button("Volver al Dashboard");
+        backButton.getStyle().set("background-color", "transparent").set("color", "#0A6D75").set("border", "1px solid #0A6D75").set("margin-top", "30px").set("cursor", "pointer");
+        backButton.addClickListener(e -> getUI().ifPresent(ui -> ui.navigate("dashboard")));
+
+        container.add(title, subtitle, cardsGrid, backButton);
+        add(container, new FooterComponent());
+
+        updateExercises("cardio-intenso");
+    }
+
+    @Override
+    public void beforeEnter(BeforeEnterEvent event) {
+        String category = event.getLocation().getQueryParameters().getParameters().getOrDefault("category", java.util.Collections.singletonList("cardio-intenso")).get(0);
+        if ("fuerza-musculo".equals(category)) {
+            selectedGoal = Goal.WEIGHT_GAIN;
+        } else {
+            selectedGoal = Goal.WEIGHT_LOSS;
+        }
+        updateExercises(category);
+    }
+
+    private void updateExercises(String category) {
+        cardsGrid.removeAll();
+
+        UserProfile user = new UserProfile(70, 1.70, 25, selectedGoal);
+
+        String categoryTitle;
+        switch (category) {
+            case "fuerza-musculo" -> {
+                categoryTitle = "Ejercicios de Fuerza y Músculo";
+            }
+            case "yoga-estiramiento" -> {
+                categoryTitle = "Ejercicios de Yoga y Estiramiento";
+            }
+            default -> {
+                categoryTitle = "Ejercicios de Cardio Intenso";
+            }
+        }
+
+        title.setText(categoryTitle);
+        String goalText = selectedGoal == Goal.WEIGHT_LOSS ? "Enfoque: Pérdida de grasa y tonificación" : "Enfoque: Fuerza e hipertrofia";
+        subtitle.setText(goalText);
+
+        List<Exercise> exercises = exerciseService.getExercisesByCategory(category);
 
         for (Exercise exercise : exercises) {
             VerticalLayout card = new VerticalLayout();
@@ -64,12 +111,5 @@ public class ExerciseView extends ProtectedView {
             card.add(eTitle, eDesc);
             cardsGrid.add(card);
         }
-
-        Button backButton = new Button("Volver al Dashboard");
-        backButton.getStyle().set("background-color", "transparent").set("color", "#0A6D75").set("border", "1px solid #0A6D75").set("margin-top", "30px").set("cursor", "pointer");
-        backButton.addClickListener(e -> getUI().ifPresent(ui -> ui.navigate("dashboard")));
-
-        container.add(title, subtitle, cardsGrid, backButton);
-        add(container, new FooterComponent());
     }
 }

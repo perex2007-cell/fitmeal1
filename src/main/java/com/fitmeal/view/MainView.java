@@ -126,9 +126,9 @@ public class MainView extends VerticalLayout {
                    .set("width", "100%");
 
         rutinasGrid.add(
-            createRoutineCard("Cardio Intenso", "Quema calorías con nuestras sesiones guiadas y rápidas", "https://images.unsplash.com/photo-1434596922112-19c563067271?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"),
-            createRoutineCard("Fuerza y Músculo", "Construye masa magra y densa con rutinas pesadas", "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"),
-            createRoutineCard("Yoga & Movilidad", "Mejora tu elasticidad corporal, mente y articulaciones", "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80")
+            createRoutineCard("Cardio Intenso", "Quema calorías con nuestras sesiones guiadas y rápidas", "https://images.unsplash.com/photo-1434596922112-19c563067271?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80", "cardio-intenso"),
+            createRoutineCard("Fuerza y Músculo", "Construye masa magra y densa con rutinas pesadas", "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80", "fuerza-musculo"),
+            createRoutineCard("Yoga y Estiramiento", "Mejora tu elasticidad corporal, mente y articulaciones", "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80", "yoga-estiramiento")
         );
 
         Button verMasBtn = new Button("Ver más en rutinas");
@@ -273,7 +273,7 @@ public class MainView extends VerticalLayout {
         return layout;
     }
 
-    private VerticalLayout createRoutineCard(String titleStr, String descStr, String bgUrl) {
+    private VerticalLayout createRoutineCard(String titleStr, String descStr, String bgUrl, String goalParam) {
         VerticalLayout card = new VerticalLayout();
         card.setPadding(true);
         card.setSpacing(false);
@@ -298,9 +298,17 @@ public class MainView extends VerticalLayout {
         Paragraph d = new Paragraph(descStr);
         d.getStyle().set("margin", "0 15px 15px").set("font-size", "0.95rem").set("color", "#666").set("line-height", "1.4");
 
-        Span link = new Span("Comienza >");
-        link.getStyle().set("color", "#F77A14").set("margin-left", "15px").set("font-weight", "bold").set("font-size", "1rem").set("cursor", "pointer");
-        link.addClickListener(e -> getUI().ifPresent(ui -> ui.navigate("exercises")));
+        Button link = new Button("Comienza >");
+        link.getStyle()
+            .set("background-color", "transparent")
+            .set("color", "#F77A14")
+            .set("border", "none")
+            .set("margin-left", "15px")
+            .set("font-weight", "bold")
+            .set("font-size", "1rem")
+            .set("cursor", "pointer")
+            .set("padding", "0");
+        link.addClickListener(e -> getUI().ifPresent(ui -> ui.navigate("exercises?category=" + goalParam)));
 
         card.add(img, t, d, link);
         return card;
