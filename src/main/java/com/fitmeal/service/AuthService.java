@@ -42,6 +42,10 @@ public class AuthService {
     /* =========================
        LOGIN
        ========================= */
+    public boolean login(User user) {
+        return login(user.getEmail(), user.getPassword());
+    }
+
     public boolean login(String email, String password) {
 
         for (User user : users) {

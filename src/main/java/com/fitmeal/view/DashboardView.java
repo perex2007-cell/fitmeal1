@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.fitmeal.view;
 
 import com.fitmeal.model.Goal;
@@ -10,22 +6,15 @@ import com.fitmeal.service.AuthService;
 import com.fitmeal.service.DietService;
 import com.fitmeal.service.HealthService;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
-
-/**
- *
- * @author Yesid Ocampo
- */
-
 
 @Route(value = "dashboard", layout = MainLayout.class)
-
 public class DashboardView extends ProtectedView {
 
     private AuthService authService = AuthService.getInstance();
@@ -33,127 +22,90 @@ public class DashboardView extends ProtectedView {
     private DietService dietService = new DietService();
 
     public DashboardView() {
-
-        setSpacing(true);
-        setPadding(true);
+        setSpacing(false);
+        setPadding(false);
         setAlignItems(Alignment.CENTER);
+        getStyle().set("background-color", "#f8fdfd");
 
-        /* ===== DATOS DE EJEMPLO ===== */
-        UserProfile user = new UserProfile(
-                70,
-                1.70,
-                25,
-                Goal.WEIGHT_LOSS
-        );
-
+        UserProfile user = new UserProfile(70, 1.70, 25, Goal.WEIGHT_LOSS);
         double bmi = healthService.calculateBMI(user);
         String classification = healthService.classifyBMI(bmi);
         String diet = dietService.getRecommendation(user.getGoal());
 
-        /* ===== TÍTULO ===== */
+        VerticalLayout container = new VerticalLayout();
+        container.setMaxWidth("1000px");
+        container.setPadding(true);
+        container.getStyle().set("margin-top", "40px").set("margin-bottom", "40px");
+
         H2 title;
-
         if (authService.isUserLoggedIn()) {
-            title = new H2("Bienvenido, "
-                    + authService.getLoggedUser().getName()
-                    );
+            title = new H2("Hola, " + authService.getLoggedUser().getName());
         } else {
-            title = new H2("Bienvenido a FitMeal 🍎");
+            title = new H2("Tu Dashboard FitMeal");
         }
+        title.getStyle().set("color", "#0A6D75").set("margin-bottom", "5px");
+        
+        Paragraph subtitle = new Paragraph("Aquí tienes el resumen de tu estado actual");
+        subtitle.getStyle().set("color", "#666").set("margin-top", "0").set("margin-bottom", "30px");
 
-        H3 subtitle = new H3("Resumen de tu estado de salud");
-
-        /* ===== LOGOUT ===== */
         Button logoutButton = new Button("Cerrar sesión");
+        logoutButton.getStyle().set("background-color", "#F77B15").set("color", "white").set("cursor", "pointer");
         logoutButton.addClickListener(e -> {
             authService.logout();
             getUI().ifPresent(ui -> ui.navigate("login"));
         });
 
-        HorizontalLayout header = new HorizontalLayout(title, logoutButton);
+        HorizontalLayout header = new HorizontalLayout(new VerticalLayout(title, subtitle), logoutButton);
         header.setWidthFull();
         header.setAlignItems(Alignment.CENTER);
         header.setJustifyContentMode(JustifyContentMode.BETWEEN);
-        header.getStyle().set("margin-bottom", "20px");
+        ((VerticalLayout) header.getComponentAt(0)).setPadding(false);
 
-        /* ===== TARJETAS ===== */
-        VerticalLayout bmiCard = new VerticalLayout(
-                new H3("IMC"),
-                new Paragraph(String.format("%.2f", bmi)),
-                new Paragraph(classification)
-        );
-        styleCard(bmiCard, "#E8F5E9");
+        // Tarjetas
+        Div cardsGrid = new Div();
+        cardsGrid.getStyle()
+                 .set("display", "grid")
+                 .set("grid-template-columns", "repeat(auto-fit, minmax(280px, 1fr))")
+                 .set("gap", "20px")
+                 .set("width", "100%");
 
-        VerticalLayout goalCard = new VerticalLayout(
-                new H3("Objetivo"),
-                new Paragraph(
-                        user.getGoal() == Goal.WEIGHT_LOSS
-                                ? "Bajar de peso"
-                                : "Subir de peso"
-                )
-        );
-        styleCard(goalCard, "#E3F2FD");
-
-        VerticalLayout dietCard = new VerticalLayout(
-                new H3("Dieta recomendada"),
-                new Paragraph(diet)
-        );
-        styleCard(dietCard, "#FFFDE7");
-
-        HorizontalLayout cards = new HorizontalLayout(
-                bmiCard,
-                goalCard,
-                dietCard
-        );
-        cards.setSpacing(true);
-        cards.setJustifyContentMode(JustifyContentMode.CENTER);
-
-        /* ===== BOTONES ===== */
-        Button exercisesButton = new Button("Ejercicios ");
-        Button infoButton = new Button("Datos de interés ℹ️");
-
-        exercisesButton.getStyle()
-                .set("background", "#1976D2")
-                .set("color", "white")
-                .set("border-radius", "10px");
-
-        infoButton.getStyle()
-                .set("background", "#388E3C")
-                .set("color", "white")
-                .set("border-radius", "10px");
-
-        exercisesButton.addClickListener(e ->
-                getUI().ifPresent(ui -> ui.navigate("exercises"))
+        cardsGrid.add(
+            createCard("Tu Índice de Masa Corporal", String.format("%.2f", bmi) + " (" + classification + ")", "#E0F2F1"),
+            createCard("Objetivo Activo", user.getGoal() == Goal.WEIGHT_LOSS ? "Pérdida de Peso" : "Aumento Muscular", "#FFF3E0"),
+            createCard("Plan Asignado", diet, "#F3E5F5")
         );
 
-        infoButton.addClickListener(e ->
-                getUI().ifPresent(ui -> ui.navigate("info"))
-        );
+        // Botones de acción inferior
+        Button exercisesButton = new Button("Ver Ejercicios");
+        exercisesButton.getStyle().set("background-color", "#0A6D75").set("color", "white").set("padding", "10px 20px");
+        exercisesButton.addClickListener(e -> getUI().ifPresent(ui -> ui.navigate("exercises")));
 
-        HorizontalLayout actions = new HorizontalLayout(
-                exercisesButton,
-                infoButton
-        );
+        Button infoButton = new Button("Blog / Tips");
+        infoButton.getStyle().set("background-color", "transparent").set("color", "#0A6D75").set("border", "1px solid #0A6D75").set("padding", "10px 20px");
+        infoButton.addClickListener(e -> getUI().ifPresent(ui -> ui.navigate("info")));
 
-        add(
-                header,
-                subtitle,
-                cards,
-                actions,
-                new FooterComponent()
-        );
+        HorizontalLayout actions = new HorizontalLayout(exercisesButton, infoButton);
+        actions.getStyle().set("margin-top", "30px");
+
+        container.add(header, cardsGrid, actions);
+        add(container, new FooterComponent());
     }
 
-    /* ===== ESTILO REUTILIZABLE ===== */
-    private void styleCard(VerticalLayout card, String backgroundColor) {
+    private VerticalLayout createCard(String titleText, String contentText, String bgColor) {
+        VerticalLayout card = new VerticalLayout();
         card.getStyle()
-                .set("background", backgroundColor)
-                .set("border-radius", "14px")
-                .set("padding", "20px")
-                .set("box-shadow", "0 10px 25px rgba(0,0,0,0.08)")
-                .set("max-width", "360px");
+            .set("background-color", "white")
+            .set("border-top", "4px solid " + bgColor)
+            .set("border-radius", "10px")
+            .set("padding", "20px")
+            .set("box-shadow", "0 5px 15px rgba(0,0,0,0.05)");
+
+        H3 t = new H3(titleText);
+        t.getStyle().set("margin", "0 0 10px 0").set("font-size", "1.1rem").set("color", "#333");
+        Paragraph p = new Paragraph(contentText);
+        p.getStyle().set("margin", "0").set("color", "#666").set("line-height", "1.5");
+        
+        card.add(t, p);
+        return card;
     }
 }
-
-
-

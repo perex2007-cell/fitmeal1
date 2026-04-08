@@ -10,6 +10,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -21,7 +22,7 @@ import com.vaadin.flow.router.Route;
 @Route(value = "", layout = MainLayout.class)
 public class MainView extends VerticalLayout {
 
-    private ComboBox<String> genderField = new ComboBox<>("Género", "Hombre", "Mujer", "Otro");
+    private ComboBox<String> genderField = new ComboBox<>("Género", "Hombre", "Mujer");
     private IntegerField ageField = new IntegerField("Edad");
     private NumberField weightField = new NumberField("Peso (kg)");
     private NumberField heightField = new NumberField("Estatura (cm)");
@@ -42,55 +43,120 @@ public class MainView extends VerticalLayout {
         setSpacing(false);
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.START);
-        getStyle().set("background-color", "#f8fdfd");
+        getStyle().set("background-color", "#ffffff");
 
-        // --- NEW HERO SECTION ---
+        // --- 1. HERO SECTION ---
         VerticalLayout mainHero = new VerticalLayout();
         mainHero.setWidthFull();
-        mainHero.setAlignItems(Alignment.CENTER);
+        mainHero.setAlignItems(Alignment.START);
         mainHero.setJustifyContentMode(JustifyContentMode.CENTER);
         mainHero.getStyle()
-                .set("min-height", "80vh")
-                .set("background", "linear-gradient(rgba(10, 109, 117, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat")
+                .set("height", "550px")
+                .set("background", "linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3') center/cover no-repeat")
                 .set("color", "white")
-                .set("text-align", "center")
-                .set("padding", "20px");
+                .set("padding", "0 10%");
 
-        H1 heroTitle = new H1("CONQUISTA TU MEJOR VERSIÓN");
-        heroTitle.getStyle().set("font-size", "4.5rem").set("font-weight", "900").set("text-transform", "uppercase").set("letter-spacing", "2px").set("margin-bottom", "10px");
+        H1 heroTitle = new H1("TRANSFORMA TU VIDA: EJERCICIO Y NUTRICIÓN A TU MEDIDA");
+        heroTitle.getStyle()
+                 .set("font-size", "3.8rem")
+                 .set("font-weight", "900")
+                 .set("max-width", "850px")
+                 .set("text-transform", "uppercase")
+                 .set("line-height", "1.1");
+                 
+        Paragraph heroSub = new Paragraph("Descubre el balance perfecto entre entrenamientos efectivos y un régimen alimenticio diseñado estratégicamente para tu tipo de cuerpo.");
+        heroSub.getStyle().set("font-size", "1.4rem").set("max-width", "700px").set("line-height", "1.5");
 
-        Paragraph heroText = new Paragraph("Entrenamiento, nutrición y disciplina. Todo lo que necesitas para alcanzar tus metas fitness en un solo nivel.");
-        heroText.getStyle().set("font-size", "1.5rem").set("max-width", "800px").set("line-height", "1.6").set("margin-top", "0").set("font-weight", "300");
-
-        mainHero.add(heroTitle, heroText);
+        mainHero.add(heroTitle, heroSub);
 
 
-        // --- INFOMATIONAL SECTION 1 (Nutrición) ---
-        VerticalLayout infoSection1 = createInfoSection(
-                "La Nutrición como Combustible",
-                "Para lograr cambios reales, el entrenamiento debe estar respaldado por la nutrición adecuada. Hablamos de macronutrientes: proteínas para reparar los músculos, carbohidratos complejos para tener energía explosiva, y grasas saludables para el equilibrio hormonal. No se trata de comer menos, se trata de comer lo que tu cuerpo demanda. Cada bocado que ingieres es una oportunidad para maximizar tu rendimiento deportivo.",
-                "https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                false
+        // --- 2. TEXTO ABUNDANTE SOBRE FITNESS ---
+        VerticalLayout textContainer = new VerticalLayout();
+        textContainer.setWidthFull();
+        textContainer.setAlignItems(Alignment.CENTER);
+        textContainer.getStyle()
+                .set("background-color", "#f8fdfd")
+                .set("padding", "80px 20px");
+
+        Div textWrapper = new Div();
+        textWrapper.getStyle()
+                .set("width", "100%")
+                .set("max-width", "1200px")
+                .set("display", "flex")
+                .set("flex-direction", "column")
+                .set("gap", "40px");
+
+        textWrapper.add(
+            createArticleBlock("La Verdad sobre la Alimentación Saludable", 
+                "Llevar un régimen nutricional adecuado va muchísimo más allá de la simple pérdida de peso; es la piedra angular para lograr la vitalidad a largo plazo, prevenir enfermedades crónicas, estabilizar tu salud mental y maximizar tu esperanza y calidad de vida. Cuando nutres tu organismo con los macronutrientes correctos (proteínas magras, carbohidratos complejos de lenta absorción y grasas saturadas e insaturadas equilibradas), estás encendiendo un motor biológico perfecto. Es indispensable romper el mito de que 'comer sano es comer aburrido o comer menos'. Se trata de comer con inteligencia, entendiendo qué alimentos provocan picos de insulina y cuáles mantienen a tu cuerpo saciado y repleto de energía durante arduas jornadas laborales y entrenamientos devastadores."),
+            
+            createArticleBlock("Por Qué Levantar Pesas y Hacer Ejercicio Cardiovascular", 
+                "Si la nutrición es el combustible, el ejercicio es el catalizador que determina hacia dónde se dirige ese combustible. Realizar ejercicios cardiovasculares continuos garantiza la salud del músculo más importante que tienes: el corazón. Correr, nadar, o rutinas HIIT expanden tu capacidad aeróbica y te protegen de infartos. Por otra parte, el entrenamiento de fuerza y resistencia (levantamiento de pesas o calistenia) somete a las fibras musculares a micro-desgarros controlados que, al repararse, generan tejido muscular denso. Esta formación muscular eleva tu tasa metabólica basal, lo que significa que a medida que creas musculatura, tu cuerpo se vuelve una caldera que quema grasa incluso en estado de reposo absoluto. ¡Combina ambos y verás una transformación total!"),
+
+            createArticleBlock("El Factor Invisible: Descanso y Sistema Nervioso", 
+                "Existe una lamentable epidemia en el fitness moderno: el sobreentrenamiento sin recuperación. En el gimnasio destruimos músculo, pero es en la cama, en sueño profundo y fase REM, donde tu sistema endocrino produce niveles astronómicos de la Hormona de Crecimiento Humano (HGH) y repara tejidos. Reducir los niveles crónicos de cortisol (estrés) resulta tan vital como la propia dieta. Sin una correcta hidratación (mínimo de 2.5 a 3 litros al día para un atleta), estiramientos matutinos o sesiones de meditación para equilibrar tu sistema nervioso simpático, todos los esfuerzos en las pesas se verán truncados por la inflamación sistémica. El éxito en el fitness es un triángulo equilátero formado por Ejercicio, Nutrición y Recupoeración.")
+        );
+        textContainer.add(textWrapper);
+
+
+        // --- 3. RUTINAS Y NUTRICIÓN (Middle Section from previous layout) ---
+        Div middleContainer = new Div();
+        middleContainer.getStyle()
+                .set("display", "flex")
+                .set("flex-wrap", "wrap")
+                .set("width", "100%")
+                .set("max-width", "1200px")
+                .set("justify-content", "space-between")
+                .set("padding", "60px 20px")
+                .set("box-sizing", "border-box")
+                .set("gap", "40px");
+
+        // Left Column: Rutinas
+        VerticalLayout rutinasCol = new VerticalLayout();
+        rutinasCol.setPadding(false);
+        rutinasCol.getStyle().set("flex", "1 1 500px");
+        H2 rutinasTitle = new H2("NUESTRAS RUTINAS");
+        rutinasTitle.getStyle().set("font-size", "1.5rem").set("font-weight", "800").set("color", "#222");
+
+        Div rutinasGrid = new Div();
+        rutinasGrid.getStyle()
+                   .set("display", "grid")
+                   .set("grid-template-columns", "repeat(auto-fit, minmax(180px, 1fr))")
+                   .set("gap", "20px")
+                   .set("width", "100%");
+
+        rutinasGrid.add(
+            createRoutineCard("Cardio Intenso", "Quema calorías con nuestras sesiones guiadas y rápidas", "https://images.unsplash.com/photo-1434596922112-19c563067271?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"),
+            createRoutineCard("Fuerza y Músculo", "Construye masa magra y densa con rutinas pesadas", "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"),
+            createRoutineCard("Yoga & Movilidad", "Mejora tu elasticidad corporal, mente y articulaciones", "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80")
         );
 
-        // --- INFOMATIONAL SECTION 2 (Fitness / Fuerza / Cardio) ---
-        VerticalLayout infoSection2 = createInfoSection(
-                "Fuerza, Hipertrofia y Resistencia",
-                "El verdadero 'fitness' requiere un enfoque híbrido. Levantar pesas pesadas no solo esculpe visualmente el cuerpo; incrementa notablemente tu densidad ósea, acelera tu metabolismo basal y fortalece tus articulaciones. Por otro lado, el entrenamiento cardiovascular (sea HIIT o LISS) mejora la vida de tu corazón, aumenta tu volumen de oxígeno máximo y favorece la quema de grasa abdominal. ¡Combinarlos te vuelve imparable!",
-                "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                true
+        Button verMasBtn = new Button("Ver más en rutinas");
+        verMasBtn.getStyle().set("background-color", "#F77A14").set("color", "white").set("border-radius", "8px").set("align-self", "center").set("margin-top", "20px").set("font-weight", "bold").set("padding", "12px 24px");
+        verMasBtn.addClickListener(e -> getUI().ifPresent(ui -> ui.navigate("exercises")));
+        
+        rutinasCol.add(rutinasTitle, rutinasGrid, verMasBtn);
+        rutinasCol.setHorizontalComponentAlignment(Alignment.CENTER, verMasBtn);
+
+
+        // Right Column: Nutrición
+        VerticalLayout nutricionCol = new VerticalLayout();
+        nutricionCol.setPadding(false);
+        nutricionCol.getStyle().set("flex", "1 1 350px");
+        H2 nutTitle = new H2("NUTRICIÓN SALUDABLE");
+        nutTitle.getStyle().set("font-size", "1.5rem").set("font-weight", "800").set("color", "#222");
+
+        nutricionCol.add(
+            nutTitle,
+            createNutritionBand("Meal Plans", "Planes enfocados para las comidas diarias que nutren tu cuerpo al instante.", "https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"),
+            createNutritionBand("Healthy Recipes", "Recetas de alto valor biológico completamente sanas, fáciles de preparar para ti.", "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"),
+            createNutritionBand("Nutrition Tips", "Consejos clave, guía de suplementación proteica y hábitos indispensables.", "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80")
         );
 
-        // --- INFOMATIONAL SECTION 3 (Disciplina y Recuperación) ---
-        VerticalLayout infoSection3 = createInfoSection(
-                "El Arte del Descanso y la Recuperación",
-                "¿Sabías que el músculo no crece mientras estás en el gimnasio, sino mientras duermes? La recuperación es el eslabón perdido en la mayoría de rutinas. Dormir entre 7 y 8 horas diarias es obligatorio para regular el cortisol (la hormona del estrés) y liberar hormona de crecimiento. Además, el fitness es un juego mental: la verdadera disciplina aparece cuando vas a entrenar esos días en los que tu mente te pide excusas.",
-                "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                false
-        );
+        middleContainer.add(rutinasCol, nutricionCol);
 
 
-        // --- FORM SECTION (Moved to bottom) ---
+        // --- 4. FORM SECTION (Diet Calculator) ---
         Div dietFormSection = new Div();
         dietFormSection.getStyle()
                 .set("display", "flex")
@@ -98,12 +164,12 @@ public class MainView extends VerticalLayout {
                 .set("width", "100%")
                 .set("max-width", "1200px")
                 .set("justify-content", "space-between")
-                .set("align-items", "flex-start")
+                .set("align-items", "center")
                 .set("padding", "80px 20px")
                 .set("margin", "0 auto")
                 .set("box-sizing", "border-box");
 
-        // Form Left Side Text
+        // Form Left Text
         VerticalLayout formLeftSide = new VerticalLayout();
         formLeftSide.setSpacing(true);
         formLeftSide.setPadding(false);
@@ -114,35 +180,36 @@ public class MainView extends VerticalLayout {
                 .set("margin-bottom", "40px");
 
         H2 formMainTitle = new H2("CREA TU PLAN DE DIETA PERSONALIZADO");
-        formMainTitle.getStyle().set("font-size", "2.8rem").set("font-family", "sans-serif").set("font-weight", "900").set("line-height", "1.1").set("color", "#0A6D75");
+        formMainTitle.getStyle().set("font-size", "3rem").set("font-family", "sans-serif").set("font-weight", "900").set("line-height", "1.1").set("color", "#222");
 
-        Paragraph p1 = new Paragraph("Después de conocer los pilares fundamentales del fitness, ¡es hora de tomar el control! El camino hacia tu cambio físico empieza analizando qué necesita tu cuerpo.");
-        p1.getStyle().set("font-size", "1.2rem").set("color", "#555");
+        Paragraph p1 = new Paragraph("¡Tu camino hacia un estilo de vida saludable comienza aquí!");
+        p1.getStyle().set("font-size", "1.4rem").set("color", "#444").set("font-weight", "600");
 
-        Paragraph p2 = new Paragraph("Ingresa tus datos biométricos en nuestro sistema y FitMeal calculará inmediatamente tus requerimientos, asignándote el plan que mejor se adapte a tus rutinas y vida diaria.");
-        p2.getStyle().set("font-size", "1.2rem").set("color", "#555");
+        Paragraph p2 = new Paragraph("Obtén un plan de comidas detallado y automatizado, basado explícitamente en tu perfil físico único y tus objetivos personales. Rellena los datos adjuntos y da el primer paso hacia la transformación total.");
+        p2.getStyle().set("font-size", "1.2rem").set("color", "#555").set("line-height", "1.6");
 
         Div formImagePlaceholder = new Div();
-        formImagePlaceholder.getStyle().set("height", "250px")
+        formImagePlaceholder.getStyle().set("height", "300px")
                 .set("width", "100%")
                 .set("background", "url('https://images.unsplash.com/photo-1498837167922-41c14434b422?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover no-repeat")
                 .set("border-radius", "15px")
+                .set("box-shadow", "0 10px 20px rgba(0,0,0,0.1)")
                 .set("margin-top", "20px");
 
         formLeftSide.add(formMainTitle, p1, p2, formImagePlaceholder);
 
-        // Form Right Side Layout
+        // Form Right Panel
         VerticalLayout formRightSide = new VerticalLayout();
         formRightSide.getStyle()
                 .set("flex", "1 1 400px")
                 .set("min-width", "300px")
                 .set("background-color", "white")
                 .set("border-radius", "15px")
-                .set("box-shadow", "0 10px 30px rgba(0,0,0,0.1)")
-                .set("padding", "30px");
+                .set("box-shadow", "0 15px 40px rgba(0,0,0,0.1)")
+                .set("padding", "40px");
 
-        H3 formTitle = new H3("Inicia tu nueva etapa hoy");
-        formTitle.getStyle().set("text-align", "center").set("width", "100%");
+        H3 formTitle = new H3("Ingresa tus datos para generar tu plan nutricional gratuito");
+        formTitle.getStyle().set("text-align", "center").set("width", "100%").set("font-size", "1.2rem").set("color", "#222").set("margin-top", "0");
 
         HorizontalLayout row1 = new HorizontalLayout(genderField, ageField);
         row1.setWidthFull();
@@ -160,13 +227,13 @@ public class MainView extends VerticalLayout {
 
         calculateButton.setWidthFull();
         calculateButton.getStyle()
-                .set("background-color", "#F77B15")
+                .set("background-color", "#F77A14")
                 .set("color", "white")
                 .set("font-weight", "bold")
                 .set("font-size", "1.1rem")
                 .set("padding", "20px 0")
                 .set("border-radius", "8px")
-                .set("margin-top", "15px")
+                .set("margin-top", "20px")
                 .set("cursor", "pointer");
 
         calculateButton.addClickListener(e -> calculate());
@@ -174,10 +241,9 @@ public class MainView extends VerticalLayout {
         VerticalLayout resultsPanel = new VerticalLayout(bmiResult, bmiClassification, dietRecommendation);
         resultsPanel.setPadding(false);
         resultsPanel.setSpacing(false);
-        resultsPanel.getStyle().set("margin-top", "15px");
+        resultsPanel.getStyle().set("margin-top", "20px");
 
         formRightSide.add(formTitle, row1, row2, activityField, goalField, calculateButton, resultsPanel);
-
         dietFormSection.add(formLeftSide, formRightSide);
 
         VerticalLayout formContainer = new VerticalLayout(dietFormSection);
@@ -185,83 +251,107 @@ public class MainView extends VerticalLayout {
         formContainer.setSpacing(false);
         formContainer.setWidthFull();
         formContainer.setAlignItems(Alignment.CENTER);
-        formContainer.getStyle().set("background-color", "#f0f8f8");
+        formContainer.getStyle().set("background-color", "#f0f8f8").set("padding-bottom", "60px");
 
 
-        // --- ADD ALL SECTIONS TO VIEW ---
-        add(mainHero, infoSection1, infoSection2, infoSection3, formContainer, new FooterComponent());
+        // --- ADD EVERYTHING TO VIEW ---
+        add(mainHero, textContainer, middleContainer, formContainer, new FooterComponent());
     }
 
-    private VerticalLayout createInfoSection(String titleStr, String textStr, String imageUrl, boolean reverseLayout) {
-        VerticalLayout section = new VerticalLayout();
-        section.setWidthFull();
-        section.setAlignItems(Alignment.CENTER);
-        section.getStyle()
-                .set("background-color", reverseLayout ? "#ffffff" : "#f8fdfd")
-                .set("padding", "80px 20px");
+    private VerticalLayout createArticleBlock(String titleStr, String textStr) {
+        VerticalLayout layout = new VerticalLayout();
+        layout.setPadding(false);
+        layout.setSpacing(false);
+        
+        H3 ttl = new H3(titleStr);
+        ttl.getStyle().set("color", "#0A6D75").set("font-size", "2rem").set("margin-bottom", "10px").set("font-weight", "800");
+        
+        Paragraph txt = new Paragraph(textStr);
+        txt.getStyle().set("color", "#555").set("font-size", "1.1rem").set("line-height", "1.7").set("text-align", "justify");
+        
+        layout.add(ttl, txt);
+        return layout;
+    }
 
-        Div container = new Div();
-        container.getStyle()
-                .set("display", "flex")
-                .set("flex-wrap", reverseLayout ? "wrap-reverse" : "wrap")
-                .set("width", "100%")
-                .set("max-width", "1200px")
-                .set("justify-content", "space-between")
-                .set("align-items", "center");
+    private VerticalLayout createRoutineCard(String titleStr, String descStr, String bgUrl) {
+        VerticalLayout card = new VerticalLayout();
+        card.setPadding(true);
+        card.setSpacing(false);
+        card.getStyle()
+            .set("background-color", "white")
+            .set("border-radius", "15px")
+            .set("border", "1px solid #eee")
+            .set("box-shadow", "0 6px 15px rgba(0,0,0,0.03)")
+            .set("overflow", "hidden")
+            .set("padding", "0")
+            .set("padding-bottom", "15px");
 
-        // Text content
-        VerticalLayout textLayout = new VerticalLayout();
-        textLayout.getStyle().set("flex", "1 1 500px").set("min-width", "300px");
-        H2 title = new H2(titleStr);
-        title.getStyle().set("color", "#0A6D75").set("font-size", "2.5rem").set("margin-top", "0");
-        Paragraph text = new Paragraph(textStr);
-        text.getStyle().set("font-size", "1.15rem").set("color", "#444").set("line-height", "1.8");
-        textLayout.add(title, text);
+        Div img = new Div();
+        img.getStyle()
+           .set("width", "100%")
+           .set("height", "180px")
+           .set("background", "url('" + bgUrl + "') center/cover no-repeat");
 
-        // Image content
-        Div imageLayout = new Div();
-        imageLayout.getStyle()
-                .set("flex", "1 1 500px")
-                .set("min-width", "300px")
-                .set("height", "400px")
-                .set("background", "url('" + imageUrl + "') center/cover no-repeat")
-                .set("border-radius", "20px")
-                .set("box-shadow", "0 10px 20px rgba(0,0,0,0.1)");
+        H4 t = new H4(titleStr);
+        t.getStyle().set("margin", "15px 15px 5px").set("font-size", "1.2rem").set("color", "#222");
 
-        if (reverseLayout) {
-            container.add(imageLayout, textLayout);
-            textLayout.getStyle().set("padding-left", "40px");
-            imageLayout.getStyle().set("margin-bottom", "20px");
-        } else {
-            container.add(textLayout, imageLayout);
-            textLayout.getStyle().set("padding-right", "40px");
-            imageLayout.getStyle().set("margin-bottom", "20px");
-        }
+        Paragraph d = new Paragraph(descStr);
+        d.getStyle().set("margin", "0 15px 15px").set("font-size", "0.95rem").set("color", "#666").set("line-height", "1.4");
 
-        section.add(container);
-        return section;
+        Span link = new Span("Comienza >");
+        link.getStyle().set("color", "#F77A14").set("margin-left", "15px").set("font-weight", "bold").set("font-size", "1rem").set("cursor", "pointer");
+        link.addClickListener(e -> getUI().ifPresent(ui -> ui.navigate("exercises")));
+
+        card.add(img, t, d, link);
+        return card;
+    }
+
+    private HorizontalLayout createNutritionBand(String titleStr, String descStr, String imgUrl) {
+        HorizontalLayout band = new HorizontalLayout();
+        band.setWidthFull();
+        band.setAlignItems(Alignment.CENTER);
+        band.getStyle()
+            .set("background-color", "#2a2c2b")
+            .set("border-radius", "15px")
+            .set("margin-bottom", "15px")
+            .set("color", "white")
+            .set("overflow", "hidden");
+
+        VerticalLayout text = new VerticalLayout();
+        H4 t = new H4(titleStr);
+        t.getStyle().set("margin", "0 O 5px 0").set("font-size", "1.2rem").set("color", "#fff");
+        Paragraph d = new Paragraph(descStr);
+        d.getStyle().set("margin", "0").set("font-size", "0.95rem").set("color", "#ccc").set("line-height", "1.3");
+        text.add(t, d);
+        text.setPadding(true);
+
+        Div img = new Div();
+        img.getStyle()
+           .set("width", "180px")
+           .set("height", "120px")
+           .set("flex-shrink", "0")
+           .set("background", "url('" + imgUrl + "') center/cover no-repeat");
+
+        band.add(text, img);
+        band.setFlexGrow(1, text);
+        return band;
     }
 
     private void calculate() {
         if (weightField.isEmpty() || heightField.isEmpty()
                 || ageField.isEmpty() || goalField.isEmpty()) {
-
             bmiResult.setText("⚠ Por favor completa todos los campos.");
             bmiClassification.setText("");
             dietRecommendation.setText("");
             return;
         }
 
-        double heightInMeters = heightField.getValue();
-        if (heightInMeters > 3.0) {
-            heightInMeters = heightInMeters / 100.0;
-        }
+        double h = heightField.getValue();
+        if (h > 3.0) h = h / 100.0;
 
         UserProfile user = new UserProfile(
-                weightField.getValue(),
-                heightInMeters,
-                ageField.getValue(),
-                goalField.getValue()
+                weightField.getValue(), h,
+                ageField.getValue(), goalField.getValue()
         );
 
         double bmi = healthService.calculateBMI(user);
@@ -269,12 +359,12 @@ public class MainView extends VerticalLayout {
         String diet = dietService.getRecommendation(user.getGoal());
 
         bmiResult.setText("IMC: " + String.format("%.2f", bmi));
-        bmiResult.getStyle().set("font-weight", "bold").set("font-size", "1.1rem").set("color", "#333");
+        bmiResult.getStyle().set("font-weight", "bold").set("font-size", "1.2rem").set("color", "#222");
 
         bmiClassification.setText("Clasificación: " + classification);
-        bmiClassification.getStyle().set("color", "#0A6D75").set("font-weight", "bold");
+        bmiClassification.getStyle().set("color", "#0A6D75").set("font-weight", "900");
 
         dietRecommendation.setText(diet);
-        dietRecommendation.getStyle().set("margin-top", "10px").set("color", "#555");
+        dietRecommendation.getStyle().set("margin-top", "15px").set("color", "#555").set("font-size", "1.1rem").set("border-left", "4px solid #0A6D75").set("padding-left", "10px");
     }
 }

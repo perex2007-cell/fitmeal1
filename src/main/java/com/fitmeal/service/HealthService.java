@@ -10,13 +10,19 @@ import com.fitmeal.model.UserProfile;
  * @author Yesid Ocampo
  */
 
-public class HealthService {
+public class HealthService implements IBiometricCalculator {
 
+    @Override
     public double calculateBMI(UserProfile user) {
-        return user.getWeight() /
-               (user.getHeight() * user.getHeight());
+        return calculateBMI(user.getWeight(), user.getHeight());
     }
 
+    @Override
+    public double calculateBMI(double weight, double height) {
+        return weight / (height * height);
+    }
+
+    @Override
     public String classifyBMI(double bmi) {
         if (bmi < 18.5) {
             return "Underweight";

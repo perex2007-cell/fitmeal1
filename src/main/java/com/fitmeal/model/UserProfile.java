@@ -23,6 +23,11 @@ public class UserProfile {
         this.goal = goal;
     }
 
+    // Sobrecarga de constructor (Constructor Overloading)
+    public UserProfile(double weight, double height) {
+        this(weight, height, 25, Goal.WEIGHT_LOSS); // Valores por defecto
+    }
+
     public double getWeight() {
         return weight;
     }
