@@ -148,9 +148,9 @@ public class MainView extends VerticalLayout {
 
         nutricionCol.add(
             nutTitle,
-            createNutritionBand("Meal Plans", "Planes enfocados para las comidas diarias que nutren tu cuerpo al instante.", "https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"),
-            createNutritionBand("Healthy Recipes", "Recetas de alto valor biológico completamente sanas, fáciles de preparar para ti.", "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"),
-            createNutritionBand("Nutrition Tips", "Consejos clave, guía de suplementación proteica y hábitos indispensables.", "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80")
+            createNutritionBand("Planes de Comidas", "Planes enfocados para las comidas diarias que nutren tu cuerpo al instante.", "https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"),
+            createNutritionBand("Recetas Saludables", "Recetas de alto valor biológico completamente sanas, fáciles de preparar para ti.", "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"),
+            createNutritionBand("Consejos Nutricionales", "Consejos clave, guía de suplementación proteica y hábitos indispensables.", "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80")
         );
 
         middleContainer.add(rutinasCol, nutricionCol);

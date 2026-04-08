@@ -34,7 +34,7 @@ public class FooterComponent extends VerticalLayout {
                 .set("gap", "40px");
 
         // Column 1
-        VerticalLayout col1 = createFooterCol("Enlaces Rápidos", "Home", "Exercises", "Create Diet", "Login / Signup");
+        VerticalLayout col1 = createFooterCol("Enlaces Rápidos", "Inicio", "Ejercicios", "Crear Plan", "Ingresar");
         
         // Column 2 
         VerticalLayout col2 = createFooterCol("Nutrición y Salud", "Calculadora IMC", "Dietas Sugeridas", "Nivel de Actividad", "Recetas");
@@ -47,7 +47,7 @@ public class FooterComponent extends VerticalLayout {
         col4.setPadding(false);
         col4.setSpacing(true);
         col4.getStyle().set("flex", "1 1 200px").set("min-width", "180px");
-        H4 title4 = new H4("Social Media");
+        H4 title4 = new H4("Redes Sociales");
         title4.getStyle().set("margin-top", "0").set("color", "white").set("font-weight", "bold").set("font-size", "1.1rem");
         
         HorizontalLayout iconsLayout = new HorizontalLayout();
@@ -111,10 +111,10 @@ public class FooterComponent extends VerticalLayout {
     private String getFooterHref(String text) {
         String normalized = text.toLowerCase().replaceAll("[^a-z0-9 ]", "").trim();
         return switch (normalized) {
-            case "home" -> "/";
+            case "home", "inicio" -> "/";
             case "exercises", "ejercicios" -> "exercises";
-            case "create diet" -> "register";
-            case "login signup", "login / signup" -> "login";
+            case "create diet", "crear plan" -> "register";
+            case "login signup", "login / signup", "ingresar" -> "login";
             case "calculadora imc" -> "info";
             case "dietas sugeridas" -> "dashboard";
             case "nivel de actividad" -> "dashboard";

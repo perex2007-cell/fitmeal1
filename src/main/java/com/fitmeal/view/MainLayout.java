@@ -24,10 +24,10 @@ public class MainLayout extends AppLayout {
         HorizontalLayout logoLayout = new HorizontalLayout(logo);
         logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
 
-        RouterLink homeLink = new RouterLink("Home", MainView.class);
-        RouterLink exercisesLink = new RouterLink("Exercises", ExerciseView.class);
-        RouterLink dashboardLink = new RouterLink("Dashboard", DashboardView.class);
-        RouterLink loginLink = new RouterLink("Login/Signup", LoginView.class);
+        RouterLink homeLink = new RouterLink("Inicio", MainView.class);
+        RouterLink exercisesLink = new RouterLink("Ejercicios", ExerciseView.class);
+        RouterLink dashboardLink = new RouterLink("Panel", DashboardView.class);
+        RouterLink loginLink = new RouterLink("Ingresar", LoginView.class);
 
         RouterLink[] links = {homeLink, exercisesLink, dashboardLink, loginLink};
         for (RouterLink link : links) {
