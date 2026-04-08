@@ -194,7 +194,7 @@ public class MainView extends VerticalLayout {
         Div formImagePlaceholder = new Div();
         formImagePlaceholder.getStyle().set("height", "300px")
                 .set("width", "100%")
-                .set("background", "url('https://images.unsplash.com/photo-1498837167922-41c14434b422?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover no-repeat")
+                .set("background", "url('https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover no-repeat")
                 .set("border-radius", "15px")
                 .set("box-shadow", "0 10px 20px rgba(0,0,0,0.1)")
                 .set("margin-top", "20px");
