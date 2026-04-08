@@ -100,7 +100,7 @@ public class MainView extends VerticalLayout {
                 "Si la nutrición es el combustible, el ejercicio es el catalizador que determina hacia dónde se dirige ese combustible. Realizar ejercicios cardiovasculares continuos garantiza la salud del músculo más importante que tienes: el corazón. Correr, nadar, o rutinas HIIT expanden tu capacidad aeróbica y te protegen de infartos. Por otra parte, el entrenamiento de fuerza y resistencia (levantamiento de pesas o calistenia) somete a las fibras musculares a micro-desgarros controlados que, al repararse, generan tejido muscular denso. Esta formación muscular eleva tu tasa metabólica basal, lo que significa que a medida que creas musculatura, tu cuerpo se vuelve una caldera que quema grasa incluso en estado de reposo absoluto. ¡Combina ambos y verás una transformación total!"),
 
             createArticleBlock("El Factor Invisible: Descanso y Sistema Nervioso", 
-                "Existe una lamentable epidemia en el fitness moderno: el sobreentrenamiento sin recuperación. En el gimnasio destruimos músculo, pero es en la cama, en sueño profundo y fase REM, donde tu sistema endocrino produce niveles astronómicos de la Hormona de Crecimiento Humano (HGH) y repara tejidos. Reducir los niveles crónicos de cortisol (estrés) resulta tan vital como la propia dieta. Sin una correcta hidratación (mínimo de 2.5 a 3 litros al día para un atleta), estiramientos matutinos o sesiones de meditación para equilibrar tu sistema nervioso simpático, todos los esfuerzos en las pesas se verán truncados por la inflamación sistémica. El éxito en el fitness es un triángulo equilátero formado por Ejercicio, Nutrición y Recupoeración.")
+                "Existe una lamentable epidemia en el fitness moderno: el sobreentrenamiento sin recuperación. En el gimnasio destruimos músculo, pero es en la cama, en sueño profundo y fase REM, donde tu sistema endocrino produce niveles astronómicos de la Hormona de Crecimiento Humano (HGH) y repara tejidos. Reducir los niveles crónicos de cortisol (estrés) resulta tan vital como la propia dieta. Sin una correcta hidratación (mínimo de 2.5 a 3 litros al día para un atleta), estiramientos matutinos o sesiones de meditación para equilibrar tu sistema nervioso simpático, todos los esfuerzos en las pesas se verán truncados por la inflamación sistémica. El éxito en el fitness es un triángulo equilátero formado por Ejercicio, Nutrición y Recuperación.")
         );
         textContainer.add(textWrapper);
 
@@ -274,6 +274,14 @@ public class MainView extends VerticalLayout {
 
         calculateButton.addClickListener(e -> calculate());
 
+        if (authService.isUserLoggedIn() && authService.getLoggedUser().getProfile() != null) {
+            UserProfile p = authService.getLoggedUser().getProfile();
+            weightField.setValue(p.getWeight());
+            heightField.setValue(p.getHeight() < 3 ? p.getHeight() * 100 : p.getHeight());
+            ageField.setValue(p.getAge());
+            goalField.setValue(p.getGoal());
+        }
+
         VerticalLayout resultsPanel = new VerticalLayout(bmiResult, bmiClassification, dietRecommendation);
         resultsPanel.setPadding(false);
         resultsPanel.setSpacing(false);
@@ -400,7 +408,7 @@ public class MainView extends VerticalLayout {
 
         VerticalLayout text = new VerticalLayout();
         H4 t = new H4(titleStr);
-        t.getStyle().set("margin", "0 O 5px 0").set("font-size", "1.2rem").set("color", "#fff");
+        t.getStyle().set("margin", "0 0 5px 0").set("font-size", "1.2rem").set("color", "#fff");
         Paragraph d = new Paragraph(descStr);
         d.getStyle().set("margin", "0").set("font-size", "0.95rem").set("color", "#ccc").set("line-height", "1.3");
         text.add(t, d);
@@ -446,11 +454,18 @@ public class MainView extends VerticalLayout {
         bmiClassification.getStyle().set("color", "#0A6D75").set("font-weight", "900");
 
         dietRecommendation.setText(diet);
-        dietRecommendation.getStyle().set("margin-top", "15px").set("color", "#555").set("font-size", "1.1rem").set("border-left", "4px solid #0A6D75").set("padding-left", "10px");
+        dietRecommendation.getStyle()
+            .set("margin-top", "15px")
+            .set("color", "#555")
+            .set("font-size", "1.1rem")
+            .set("border-left", "4px solid #0A6D75")
+            .set("padding-left", "10px")
+            .set("white-space", "pre-wrap");
 
         // Guardar en el perfil del usuario logueado si existe
         if (authService.isUserLoggedIn()) {
             authService.getLoggedUser().setProfile(user);
+            com.vaadin.flow.component.notification.Notification.show("¡Perfil y Plan Saludable actualizado!");
         }
     }
 }

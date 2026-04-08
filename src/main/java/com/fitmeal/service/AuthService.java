@@ -5,6 +5,8 @@
 package com.fitmeal.service;
 
 
+import com.fitmeal.model.Goal;
+import com.fitmeal.model.UserProfile;
 import com.fitmeal.model.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +26,10 @@ public class AuthService {
 
     // Constructor privado
     private AuthService() {
-        // Usuario de prueba inicial
-        users.add(new User(
-                "Juan Pérez",
-                "juan@fitmeal.com",
-                "1234"
-        ));
+        // Usuario de prueba inicial con perfil inicializado
+        User testUser = new User("Juan Pérez", "juan@fitmeal.com", "1234");
+        testUser.setProfile(new UserProfile(80.0, 1.80, 28, Goal.WEIGHT_LOSS));
+        users.add(testUser);
     }
 
     public static AuthService getInstance() {
