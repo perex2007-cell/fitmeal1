@@ -24,7 +24,7 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
  */
 
 
-@Route("dashboard")
+@Route(value = "dashboard", layout = MainLayout.class)
 
 public class DashboardView extends ProtectedView {
 
@@ -139,7 +139,8 @@ public class DashboardView extends ProtectedView {
                 header,
                 subtitle,
                 cards,
-                actions
+                actions,
+                new FooterComponent()
         );
     }
 

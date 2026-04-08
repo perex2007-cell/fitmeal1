@@ -21,7 +21,7 @@ import java.util.List;
  * @author Yesid Ocampo
  */
 
-@Route("info")
+@Route(value = "info", layout = MainLayout.class)
 
 public class InfoView extends ProtectedView {
 
@@ -55,6 +55,7 @@ public class InfoView extends ProtectedView {
         );
 
         add(backButton);
+        add(new FooterComponent());
     }
 
     private void styleCard(VerticalLayout card, String backgroundColor) {

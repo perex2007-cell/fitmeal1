@@ -23,7 +23,7 @@ import java.util.List;
  * @author Yesid Ocampo
  */
 
-@Route("exercises")
+@Route(value = "exercises", layout = MainLayout.class)
 
 public class ExerciseView extends ProtectedView {
 
@@ -74,6 +74,7 @@ public class ExerciseView extends ProtectedView {
         );
 
         add(backButton);
+        add(new FooterComponent());
     }
 
     /* ===== ESTILO REUTILIZABLE ===== */
