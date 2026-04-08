@@ -17,7 +17,7 @@ public class FooterComponent extends VerticalLayout {
         setSpacing(false);
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
-        getStyle().set("background-color", "#04444a") // Color oscuro como en la foto
+        getStyle().set("background-color", "#04444a")
                   .set("color", "white")
                   .set("margin-top", "50px");
 
@@ -108,25 +108,25 @@ public class FooterComponent extends VerticalLayout {
         return col;
     }
 
-   private String getFooterHref(String text) {
-    String normalized = text.toLowerCase().trim();
+    private String getFooterHref(String text) {
+        String normalized = text.toLowerCase().trim();
 
-    return switch (normalized) {
-        case "home", "inicio" -> "/";
-        case "exercises", "ejercicios" -> "/exercises";
-        case "create diet", "crear plan" -> "/#diet-calculator";
-        case "login signup", "login / signup", "ingresar" -> "/login";
-        case "calculadora imc" -> "/info#imc-calculator";
-        case "dietas sugeridas" -> "/dashboard";
-        case "nivel de actividad" -> "/dashboard";
-        case "recetas" -> "/info";
-        case "contacto" -> "/contact";
-        case "blog" -> "/blog";
-        case "privacidad" -> "/privacy";
-        case "terminos", "términos" -> "/terms";
-        default -> "#";
-    };
-}
+        return switch (normalized) {
+            case "home", "inicio" -> "/";
+            case "exercises", "ejercicios" -> "/exercises";
+            case "create diet", "crear plan" -> "/#diet-calculator";
+            case "login signup", "login / signup", "ingresar" -> "/login";
+            case "calculadora imc" -> "/info#imc-calculator";
+            case "dietas sugeridas" -> "/dashboard";
+            case "nivel de actividad" -> "/dashboard";
+            case "recetas" -> "/info";
+            case "contacto" -> "/contact";
+            case "blog" -> "/blog";
+            case "privacidad" -> "/privacy";
+            case "terminos", "términos" -> "/terms";
+            default -> "#";
+        };
+    }
 
     private void styleFooterLink(Component link) {
         link.getElement().getStyle()
@@ -141,8 +141,15 @@ public class FooterComponent extends VerticalLayout {
     }
 
     private Anchor createSocialIcon(String text, String bgColor) {
-        Anchor icon = new Anchor("#", text);
-        styleFooterLink(icon);
+        String url = switch(text) {
+            case "tw" -> "https://x.com/?lang=es";
+            case "fb" -> "https://www.facebook.com/?stype=lo&flo=1&deoia=1&jlou=AfiTBIXCpY7CGMoeQ6nYKhwuTlBTtv93pFYXuLbDnpjki19oK9M2vF44lN-jOx8DfXh0pnY4MEOUlqFPRXJ1aB2vsuIYC3RNQHdYVCuquV0kyg&smuh=6269&lh=AdBI96-NkPhaW8GbgDE";
+            case "ig" -> "https://www.instagram.com/?hl=es";
+            case "yt" -> "https://www.youtube.com/?app=desktop&hl=es";
+            default -> "#";
+        };
+        Anchor icon = new Anchor(url, text);
+        icon.setTarget("_blank");
         icon.getStyle()
             .set("width", "35px")
             .set("height", "35px")
