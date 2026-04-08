@@ -14,11 +14,17 @@ public class Exercise {
     private String name;
     private String description;
     private Goal goal;
+    private String imageUrl;
 
-    public Exercise(String name, String description, Goal goal) {
+    public Exercise(String name, String description, Goal goal, String imageUrl) {
         this.name = name;
         this.description = description;
         this.goal = goal;
+        this.imageUrl = imageUrl;
+    }
+
+    public Exercise(String name, String description, Goal goal) {
+        this(name, description, goal, "");
     }
 
     public String getName() {
@@ -31,5 +37,9 @@ public class Exercise {
 
     public Goal getGoal() {
         return goal;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 }
