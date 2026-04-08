@@ -164,6 +164,7 @@ public class MainView extends VerticalLayout {
 
         // --- 4. FORM SECTION (Diet Calculator) ---
         Div dietFormSection = new Div();
+        dietFormSection.setId("diet-calculator");
         dietFormSection.getStyle()
                 .set("display", "flex")
                 .set("flex-wrap", "wrap")

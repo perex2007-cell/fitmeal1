@@ -114,7 +114,7 @@ public class FooterComponent extends VerticalLayout {
     return switch (normalized) {
         case "home", "inicio" -> "/";
         case "exercises", "ejercicios" -> "/exercises";
-        case "create diet", "crear plan" -> "/register";
+        case "create diet", "crear plan" -> "/#diet-calculator";
         case "login signup", "login / signup", "ingresar" -> "/login";
         case "calculadora imc" -> "/info#imc-calculator";
         case "dietas sugeridas" -> "/dashboard";
