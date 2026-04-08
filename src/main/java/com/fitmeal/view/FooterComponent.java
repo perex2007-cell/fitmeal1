@@ -108,23 +108,25 @@ public class FooterComponent extends VerticalLayout {
         return col;
     }
 
-    private String getFooterHref(String text) {
-        String normalized = text.toLowerCase().replaceAll("[^a-z0-9 ]", "").trim();
-        return switch (normalized) {
-            case "home", "inicio" -> "/";
-            case "exercises", "ejercicios" -> "exercises";
-            case "create diet", "crear plan" -> "register";
-            case "login signup", "login / signup", "ingresar" -> "login";
-            case "calculadora imc" -> "info#imc-calculator";
-            case "dietas sugeridas" -> "dashboard";
-            case "nivel de actividad" -> "dashboard";
-            case "recetas" -> "info";
-            case "contacto" -> "contact";
-            case "blog" -> "blog";
-            case "privacidad", "terminos", "términos" -> "#";
-            default -> "#";
-        };
-    }
+   private String getFooterHref(String text) {
+    String normalized = text.toLowerCase().trim();
+
+    return switch (normalized) {
+        case "home", "inicio" -> "/";
+        case "exercises", "ejercicios" -> "/exercises";
+        case "create diet", "crear plan" -> "/register";
+        case "login signup", "login / signup", "ingresar" -> "/login";
+        case "calculadora imc" -> "/info#imc-calculator";
+        case "dietas sugeridas" -> "/dashboard";
+        case "nivel de actividad" -> "/dashboard";
+        case "recetas" -> "/info";
+        case "contacto" -> "/contact";
+        case "blog" -> "/blog";
+        case "privacidad" -> "/privacy";
+        case "terminos", "términos" -> "/terms";
+        default -> "#";
+    };
+}
 
     private void styleFooterLink(Component link) {
         link.getElement().getStyle()
