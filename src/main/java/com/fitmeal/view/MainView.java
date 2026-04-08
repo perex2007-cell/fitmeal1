@@ -163,66 +163,95 @@ public class MainView extends VerticalLayout {
                 .set("flex-wrap", "wrap")
                 .set("width", "100%")
                 .set("max-width", "1200px")
-                .set("justify-content", "space-between")
-                .set("align-items", "center")
-                .set("padding", "80px 20px")
+                .set("align-items", "stretch")
+                .set("gap", "40px")
                 .set("margin", "0 auto")
                 .set("box-sizing", "border-box");
 
-        // Form Left Text
-        VerticalLayout formLeftSide = new VerticalLayout();
-        formLeftSide.setSpacing(true);
-        formLeftSide.setPadding(false);
+        // ===== LEFT SIDE: Info + Objetivo Cards + Hero Image =====
+        Div formLeftSide = new Div();
         formLeftSide.getStyle()
-                .set("flex", "1 1 400px")
+                .set("flex", "1 1 480px")
                 .set("min-width", "300px")
-                .set("margin-right", "40px")
-                .set("margin-bottom", "40px");
+                .set("display", "flex")
+                .set("flex-direction", "column")
+                .set("gap", "20px");
 
         H2 formMainTitle = new H2("CREA TU PLAN DE DIETA PERSONALIZADO");
-        formMainTitle.getStyle().set("font-size", "3rem").set("font-family", "sans-serif").set("font-weight", "900").set("line-height", "1.1").set("color", "#222");
+        formMainTitle.getStyle()
+                .set("font-size", "2.6rem")
+                .set("font-weight", "900")
+                .set("line-height", "1.1")
+                .set("color", "#1a1a2e")
+                .set("margin", "0");
 
         Paragraph p1 = new Paragraph("¡Tu camino hacia un estilo de vida saludable comienza aquí!");
-        p1.getStyle().set("font-size", "1.4rem").set("color", "#444").set("font-weight", "600");
+        p1.getStyle()
+                .set("font-size", "1.2rem")
+                .set("color", "#0A6D75")
+                .set("font-weight", "700")
+                .set("margin", "0");
 
-        Paragraph p2 = new Paragraph("Obtén un plan de comidas detallado y automatizado, basado explícitamente en tu perfil físico único y tus objetivos personales. Rellena los datos adjuntos y da el primer paso hacia la transformación total.");
-        p2.getStyle().set("font-size", "1.2rem").set("color", "#555").set("line-height", "1.6");
+        Paragraph p2 = new Paragraph("Obtén un plan de comidas detallado basado en tu perfil físico y objetivos personales. Rellena los datos y da el primer paso hacia tu transformación total.");
+        p2.getStyle()
+                .set("font-size", "1.05rem")
+                .set("color", "#555")
+                .set("line-height", "1.65")
+                .set("margin", "0");
 
-        Div formImagePlaceholder = new Div();
-        formImagePlaceholder.getStyle().set("height", "300px")
-                .set("width", "100%")
-                .set("background", "url('https://images.unsplash.com/photo-1498837167922-41c14434b422?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover no-repeat")
-                .set("border-radius", "15px")
-                .set("box-shadow", "0 10px 20px rgba(0,0,0,0.1)")
-                .set("margin-top", "20px");
+        // --- 3 Goal Cards con imágenes ---
+        Div goalCardsRow = new Div();
+        goalCardsRow.getStyle()
+                .set("display", "flex")
+                .set("gap", "14px")
+                .set("width", "100%");
 
-        formLeftSide.add(formMainTitle, p1, p2, formImagePlaceholder);
+        goalCardsRow.add(
+            createGoalCard("🥦 Perder Peso",
+                "https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"),
+            createGoalCard("💪 Ganar Músculo",
+                "https://images.unsplash.com/photo-1532384748853-8f54a8f476e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"),
+            createGoalCard("⚖️ Mantener Peso",
+                "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80")
+        );
 
-        // Form Right Panel
+        formLeftSide.add(formMainTitle, p1, p2, goalCardsRow);
+
+        // ===== RIGHT SIDE: Form Panel =====
         VerticalLayout formRightSide = new VerticalLayout();
         formRightSide.getStyle()
-                .set("flex", "1 1 400px")
+                .set("flex", "1 1 420px")
                 .set("min-width", "300px")
                 .set("background-color", "white")
                 .set("border-radius", "15px")
                 .set("box-shadow", "0 15px 40px rgba(0,0,0,0.1)")
-                .set("padding", "40px");
+                .set("padding", "40px 35px");
 
         H3 formTitle = new H3("Ingresa tus datos para generar tu plan nutricional gratuito");
-        formTitle.getStyle().set("text-align", "center").set("width", "100%").set("font-size", "1.2rem").set("color", "#222").set("margin-top", "0");
+        formTitle.getStyle()
+                .set("text-align", "center")
+                .set("width", "100%")
+                .set("font-size", "1.15rem")
+                .set("color", "#222")
+                .set("margin-top", "0")
+                .set("margin-bottom", "10px");
 
         HorizontalLayout row1 = new HorizontalLayout(genderField, ageField);
         row1.setWidthFull();
+        row1.getStyle().set("gap", "12px");
         genderField.setWidth("50%");
         ageField.setWidth("50%");
 
         HorizontalLayout row2 = new HorizontalLayout(weightField, heightField);
         row2.setWidthFull();
+        row2.getStyle().set("gap", "12px");
         weightField.setWidth("50%");
         heightField.setWidth("50%");
 
         activityField.setWidthFull();
         goalField.setItems(Goal.values());
+        goalField.setItemLabelGenerator(Goal::getLabel);
+        goalField.setPlaceholder("Selecciona tu objetivo");
         goalField.setWidthFull();
 
         calculateButton.setWidthFull();
@@ -231,10 +260,11 @@ public class MainView extends VerticalLayout {
                 .set("color", "white")
                 .set("font-weight", "bold")
                 .set("font-size", "1.1rem")
-                .set("padding", "20px 0")
-                .set("border-radius", "8px")
-                .set("margin-top", "20px")
-                .set("cursor", "pointer");
+                .set("padding", "18px 0")
+                .set("border-radius", "10px")
+                .set("margin-top", "15px")
+                .set("cursor", "pointer")
+                .set("letter-spacing", "0.5px");
 
         calculateButton.addClickListener(e -> calculate());
 
@@ -251,7 +281,9 @@ public class MainView extends VerticalLayout {
         formContainer.setSpacing(false);
         formContainer.setWidthFull();
         formContainer.setAlignItems(Alignment.CENTER);
-        formContainer.getStyle().set("background-color", "#f0f8f8").set("padding-bottom", "60px");
+        formContainer.getStyle()
+                .set("background-color", "#f0f8f8")
+                .set("padding", "80px 40px 80px 40px");
 
 
         // --- ADD EVERYTHING TO VIEW ---
@@ -311,6 +343,41 @@ public class MainView extends VerticalLayout {
         link.addClickListener(e -> getUI().ifPresent(ui -> ui.navigate("exercises?category=" + goalParam)));
 
         card.add(img, t, d, link);
+        return card;
+    }
+
+    private Div createGoalCard(String label, String imgUrl) {
+        Div card = new Div();
+        card.getStyle()
+            .set("flex", "1 1 0")
+            .set("border-radius", "12px")
+            .set("overflow", "hidden")
+            .set("position", "relative")
+            .set("height", "120px")
+            .set("background-image", "url('" + imgUrl + "')")
+            .set("background-size", "cover")
+            .set("background-position", "center")
+            .set("background-repeat", "no-repeat")
+            .set("box-shadow", "0 4px 15px rgba(0,0,0,0.18)");
+
+        Div overlay = new Div();
+        overlay.getStyle()
+            .set("position", "absolute")
+            .set("inset", "0")
+            .set("background", "linear-gradient(to top, rgba(0,0,0,0.72) 25%, transparent 70%)")
+            .set("display", "flex")
+            .set("align-items", "flex-end")
+            .set("padding", "10px 12px");
+
+        Span labelSpan = new Span(label);
+        labelSpan.getStyle()
+            .set("color", "white")
+            .set("font-weight", "700")
+            .set("font-size", "0.85rem")
+            .set("line-height", "1.2");
+
+        overlay.add(labelSpan);
+        card.add(overlay);
         return card;
     }
 

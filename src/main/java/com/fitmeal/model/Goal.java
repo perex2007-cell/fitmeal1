@@ -10,7 +10,23 @@ package com.fitmeal.model;
  */
 
 public enum Goal {
-    WEIGHT_LOSS,
-    WEIGHT_GAIN
+    WEIGHT_LOSS("Perder Peso"),
+    WEIGHT_GAIN("Ganar Masa Muscular"),
+    MAINTAIN_WEIGHT("Mantener Peso");
+
+    private final String label;
+
+    Goal(String label) {
+        this.label = label;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    @Override
+    public String toString() {
+        return label;
+    }
 }
 
