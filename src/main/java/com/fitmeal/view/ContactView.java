@@ -3,7 +3,10 @@ package com.fitmeal.view;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.Route;
 
 @Route(value = "contact", layout = MainLayout.class)
@@ -14,6 +17,7 @@ public class ContactView extends VerticalLayout {
         setPadding(false);
         setMargin(false);
         setSizeFull();
+        getStyle().set("background-color", "#f8fdfd");
 
         // Cuadro superior
         VerticalLayout topBox = new VerticalLayout();
@@ -35,7 +39,7 @@ public class ContactView extends VerticalLayout {
         contactInfo.add(
                 new Paragraph("📧 Email: Santiagofitmeal@gmail.com"),
                 new Paragraph("📞 Teléfono: 305 2648602"),
-                new Paragraph("📍 Dirección: El Salado, Copacabana "),
+                new Paragraph("📍 Dirección: El Salado, Copacabana"),
                 new Paragraph("🕒 Horarios: Lunes a Viernes, 9:00 AM - 6:00 PM")
         );
 
@@ -66,7 +70,6 @@ public class ContactView extends VerticalLayout {
 
         bottomBox.add(socialTitle, socialMedia);
 
-        add(topBox, bottomBox);
-        expand(topBox, bottomBox);
+        add(topBox, bottomBox, new FooterComponent());
     }
 }
