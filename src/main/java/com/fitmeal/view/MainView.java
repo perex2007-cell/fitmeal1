@@ -3,6 +3,7 @@ package com.fitmeal.view;
 import com.fitmeal.model.Goal;
 import com.fitmeal.model.User;
 import com.fitmeal.model.UserProfile;
+import com.fitmeal.service.AuthService;
 import com.fitmeal.service.DietService;
 import com.fitmeal.service.HealthService;
 import com.vaadin.flow.component.button.Button;
@@ -38,6 +39,7 @@ public class MainView extends VerticalLayout {
 
     private HealthService healthService = new HealthService();
     private DietService dietService = new DietService();
+    private AuthService authService = AuthService.getInstance();
 
     public MainView() {
         setPadding(false);
