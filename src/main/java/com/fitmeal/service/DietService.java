@@ -14,24 +14,30 @@ import com.fitmeal.model.Goal;
 public class DietService {
 
     public String getRecommendation(Goal goal) {
-
-        if (goal == Goal.WEIGHT_LOSS) {
-            return """
-                Dieta para perder peso:
-                - Vegetales y proteinas
-                - Proteinas limpias
-                - Toma suficiente agua 
-                - Evita el azucar y comidas fritas
+        return switch (goal) {
+            case WEIGHT_LOSS -> """
+                Dieta para Perder Peso:
+                - Prioriza vegetales y proteínas magras
+                - Proteínas limpias: pollo a la plancha, pescado, clara de huevo
+                - Bebe al menos 2.5 litros de agua al día
+                - Evita el azúcar refinada y comidas fritas
+                - Déficit calórico moderado del 15-20%
                 """;
-        } else {
-            return """
-                Dieta para ganar peso:
-                - Proteinas (Pollo, Pescado, huevos)
-                - carboidratos 
-                - Harinas limpias 
-                - Come 5 comidas al dia
+            case WEIGHT_GAIN -> """
+                Dieta para Ganar Masa Muscular:
+                - Proteínas de alto valor biológico: pollo, pescado, huevos
+                - Carbohidratos complejos: arroz integral, avena, batata
+                - Harinas limpias y grasas saludables (aguacate, frutos secos)
+                - Come 5-6 comidas al día con superávit calórico del 10-15%
                 """;
-        }
+            case MAINTAIN_WEIGHT -> """
+                Dieta para Mantener el Peso:
+                - Balance equilibrado de macronutrientes
+                - Proteínas, carbohidratos complejos y grasas saludables
+                - 3 comidas principales y 2 meriendas nutritivas al día
+                - Mantén constancia en las calorías totales diarias
+                """;
+        };
     }
 }
 

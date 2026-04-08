@@ -25,13 +25,13 @@ public class HealthService implements IBiometricCalculator {
     @Override
     public String classifyBMI(double bmi) {
         if (bmi < 18.5) {
-            return "Underweight";
+            return "Bajo peso";
         } else if (bmi < 25) {
-            return "Normal weight";
+            return "Peso normal";
         } else if (bmi < 30) {
-            return "Overweight";
+            return "Sobrepeso";
         } else {
-            return "Obesity";
+            return "Obesidad";
         }
     }
 }

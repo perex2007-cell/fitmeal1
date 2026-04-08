@@ -1,6 +1,7 @@
 package com.fitmeal.view;
 
 import com.fitmeal.model.Goal;
+import com.fitmeal.model.User;
 import com.fitmeal.model.UserProfile;
 import com.fitmeal.service.AuthService;
 import com.fitmeal.service.DietService;
@@ -27,10 +28,25 @@ public class DashboardView extends ProtectedView {
         setAlignItems(Alignment.CENTER);
         getStyle().set("background-color", "#f8fdfd");
 
-        UserProfile user = new UserProfile(70, 1.70, 25, Goal.WEIGHT_LOSS);
-        double bmi = healthService.calculateBMI(user);
-        String classification = healthService.classifyBMI(bmi);
-        String diet = dietService.getRecommendation(user.getGoal());
+        User loggedUser = authService.getLoggedUser();
+        UserProfile profile = (loggedUser != null) ? loggedUser.getProfile() : null;
+
+        double bmi;
+        String classification;
+        String diet;
+        String goalLabel;
+
+        if (profile != null) {
+            bmi = healthService.calculateBMI(profile);
+            classification = healthService.classifyBMI(bmi);
+            diet = dietService.getRecommendation(profile.getGoal());
+            goalLabel = profile.getGoal().getLabel();
+        } else {
+            bmi = 0;
+            classification = "Sin datos";
+            diet = "Usa la calculadora en el Inicio para obtener tu plan personalizado.";
+            goalLabel = "No definido";
+        }
 
         VerticalLayout container = new VerticalLayout();
         container.setMaxWidth("1000px");
@@ -38,8 +54,8 @@ public class DashboardView extends ProtectedView {
         container.getStyle().set("margin-top", "40px").set("margin-bottom", "40px");
 
         H2 title;
-        if (authService.isUserLoggedIn()) {
-            title = new H2("Hola, " + authService.getLoggedUser().getName());
+        if (loggedUser != null) {
+            title = new H2("Hola, " + loggedUser.getName());
         } else {
             title = new H2("Tu Dashboard FitMeal");
         }
@@ -48,17 +64,10 @@ public class DashboardView extends ProtectedView {
         Paragraph subtitle = new Paragraph("Aquí tienes el resumen de tu estado actual");
         subtitle.getStyle().set("color", "#666").set("margin-top", "0").set("margin-bottom", "30px");
 
-        Button logoutButton = new Button("Cerrar sesión");
-        logoutButton.getStyle().set("background-color", "#F77B15").set("color", "white").set("cursor", "pointer");
-        logoutButton.addClickListener(e -> {
-            authService.logout();
-            getUI().ifPresent(ui -> ui.navigate("login"));
-        });
-
-        HorizontalLayout header = new HorizontalLayout(new VerticalLayout(title, subtitle), logoutButton);
+        HorizontalLayout header = new HorizontalLayout(new VerticalLayout(title, subtitle));
         header.setWidthFull();
         header.setAlignItems(Alignment.CENTER);
-        header.setJustifyContentMode(JustifyContentMode.BETWEEN);
+        header.setJustifyContentMode(JustifyContentMode.START);
         ((VerticalLayout) header.getComponentAt(0)).setPadding(false);
 
         // Tarjetas
@@ -70,8 +79,8 @@ public class DashboardView extends ProtectedView {
                  .set("width", "100%");
 
         cardsGrid.add(
-            createCard("Tu Índice de Masa Corporal", String.format("%.2f", bmi) + " (" + classification + ")", "#E0F2F1"),
-            createCard("Objetivo Activo", user.getGoal() == Goal.WEIGHT_LOSS ? "Pérdida de Peso" : "Aumento Muscular", "#FFF3E0"),
+            createCard("Tu Índice de Masa Corporal", bmi > 0 ? String.format("%.2f", bmi) + " (" + classification + ")" : classification, "#E0F2F1"),
+            createCard("Objetivo Activo", goalLabel, "#FFF3E0"),
             createCard("Plan Asignado", diet, "#F3E5F5")
         );
 
