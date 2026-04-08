@@ -1,6 +1,7 @@
 package com.fitmeal.view;
 
 import com.fitmeal.model.Goal;
+import com.fitmeal.model.User;
 import com.fitmeal.model.UserProfile;
 import com.fitmeal.service.DietService;
 import com.fitmeal.service.HealthService;
@@ -444,5 +445,10 @@ public class MainView extends VerticalLayout {
 
         dietRecommendation.setText(diet);
         dietRecommendation.getStyle().set("margin-top", "15px").set("color", "#555").set("font-size", "1.1rem").set("border-left", "4px solid #0A6D75").set("padding-left", "10px");
+
+        // Guardar en el perfil del usuario logueado si existe
+        if (authService.isUserLoggedIn()) {
+            authService.getLoggedUser().setProfile(user);
+        }
     }
 }

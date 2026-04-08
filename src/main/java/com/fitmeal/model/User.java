@@ -14,6 +14,7 @@ public class User {
     private String name;
     private String email;
     private String password;
+    private UserProfile profile;
 
     public User(String name, String email, String password) {
         this.name = name;
@@ -31,6 +32,14 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public UserProfile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(UserProfile profile) {
+        this.profile = profile;
     }
 }
 

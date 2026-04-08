@@ -107,18 +107,30 @@ public class ExerciseService {
                 Goal.WEIGHT_LOSS,
                 "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&q=80"
         ));
+
+        // Ejercicios para mantener peso
+        exercises.add(new Exercise(
+                "Natación recreativa",
+                "Mano a mano entre cardio y resistencia sin impacto articular.",
+                Goal.MAINTAIN_WEIGHT,
+                "https://images.unsplash.com/photo-1530549387631-afb16881966a?auto=format&fit=crop&w=800&q=80"
+        ));
+
+        exercises.add(new Exercise(
+                "Pilates mat",
+                "Control central y tonificación equilibrada para un cuerpo funcional.",
+                Goal.MAINTAIN_WEIGHT,
+                "https://images.unsplash.com/photo-1518611012118-296072bb4f4a?auto=format&fit=crop&w=800&q=80"
+        ));
     }
 
     public List<Exercise> getExercisesByGoal(Goal goal) {
-
         List<Exercise> result = new ArrayList<>();
-
         for (Exercise exercise : exercises) {
             if (exercise.getGoal() == goal) {
                 result.add(exercise);
             }
         }
-
         return result;
     }
 
@@ -135,14 +147,25 @@ public class ExerciseService {
             }
             case "yoga-estiramiento" -> {
                 for (Exercise exercise : exercises) {
-                    if (exercise.getName().toLowerCase().contains("yoga") || exercise.getName().toLowerCase().contains("estiramiento")) {
+                    if (exercise.getName().toLowerCase().contains("yoga") 
+                            || exercise.getName().toLowerCase().contains("estiramiento")
+                            || exercise.getName().toLowerCase().contains("pilates")) {
                         result.add(exercise);
                     }
                 }
             }
-            default -> {
+            case "mantenimiento" -> {
                 for (Exercise exercise : exercises) {
-                    if (exercise.getGoal() == Goal.WEIGHT_LOSS && !exercise.getName().toLowerCase().contains("yoga") && !exercise.getName().toLowerCase().contains("estiramiento")) {
+                    if (exercise.getGoal() == Goal.MAINTAIN_WEIGHT) {
+                        result.add(exercise);
+                    }
+                }
+            }
+            default -> { // Cardio / Perdida de peso
+                for (Exercise exercise : exercises) {
+                    if (exercise.getGoal() == Goal.WEIGHT_LOSS 
+                            && !exercise.getName().toLowerCase().contains("yoga") 
+                            && !exercise.getName().toLowerCase().contains("estiramiento")) {
                         result.add(exercise);
                     }
                 }
